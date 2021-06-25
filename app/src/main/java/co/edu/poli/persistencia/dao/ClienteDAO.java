@@ -11,10 +11,11 @@ import java.sql.SQLException;
 
 public class ClienteDAO {
     public static Cliente read(Integer cedula, Connection connection) throws SQLException {
-        String sql = "SELECT Cedula, Nombre1, Nombre2, Apellido1, Apellido2, c.Codciudad, c.Nombre, p.Codpais, p.Nombre ";
+        String sql = "SELECT Cedula, Nombre1, Nombre2, Apellido1, Apellido2, c.Codciudad, c.Nombre, p.Codpais, p.Nombre, t.Tel ";
         sql += "FROM Cliente ";
         sql += "JOIN Ciudad c on (c.Codciudad = Ciudad) ";
         sql += "JOIN Pais p on (p.codpais = c.Pais) ";
+        sql += "JOIN Telefono t on (t.Ced = Cedula) ";
         sql += "WHERE Cedula=?";
         // String sql = "INSERT INTO Cliente (Cedula, Nombre1, Nombre2, Apellido1, Apellido2, Ciudad) VALUES(?, ?, ?, ?, ?, ?)";
 //        String sql = "INSERT INTO Cliente (Cedula, Nombre1, Nombre2, Apellido1, Apellido2, Ciudad) VALUES(80258757, 'Darwison', '', 'Orjuela', 'Vallejo', 12345)";
@@ -28,8 +29,9 @@ public class ClienteDAO {
                     String segundoApellido = resultSet.getString(5);
                     Pais pais = new Pais(resultSet.getInt(8), resultSet.getString(9));
                     Ciudad ciudad = new Ciudad(resultSet.getInt(6), resultSet.getString(7), pais);
+                    String telefono = resultSet.getString(10);
 
-                    return new Cliente(cedula, primerNombre, segundoNombre, primerApellido, segundoApellido, ciudad);
+                    return new Cliente(cedula, primerNombre, segundoNombre, primerApellido, segundoApellido, ciudad, telefono);
                 }
 
                 throw new RuntimeException("Cliente no encontrado: " + cedula);

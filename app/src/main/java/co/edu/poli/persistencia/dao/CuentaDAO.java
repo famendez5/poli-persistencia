@@ -9,9 +9,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class CuentaDAO {
-    public static void create(Cuenta cuenta, Connection connection) throws SQLException {
-    }
-
     public static Cuenta read(Integer numero, Connection connection) throws SQLException {
         String sql = "SELECT Numcuenta, Ingreso_money, Egreso_money, Saldo_money, Cliente FROM Cuenta WHERE Numcuenta=?";
         try (PreparedStatement stmt = connection.prepareCall(sql)) {
@@ -28,5 +25,14 @@ public class CuentaDAO {
     }
 
     public static void update(Cuenta cuenta, Connection connection) throws SQLException {
+        final String sql = "UPDATE Cuenta SET Ingreso_money = ?, Egreso_money = ?, Saldo_money = ? WHERE Numcuenta = ?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setDouble(1, cuenta.ingreso);
+            stmt.setDouble(2, cuenta.egreso);
+            stmt.setDouble(3, cuenta.saldo);
+            stmt.setInt(4, cuenta.numero);
+            stmt.execute();
+        }
     }
 }

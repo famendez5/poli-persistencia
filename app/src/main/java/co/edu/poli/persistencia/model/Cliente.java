@@ -7,14 +7,16 @@ public class Cliente {
     public final String primerApellido;
     public final String segundoApellido;
     public final Ciudad ciudad;
+    public final String telefono;
 
-    public Cliente(Integer cedula, String primerNombre, String segundoNombre, String primerApellido, String segundoApellido, Ciudad ciudad) {
+    public Cliente(Integer cedula, String primerNombre, String segundoNombre, String primerApellido, String segundoApellido, Ciudad ciudad, String telefono) {
         this.cedula = cedula;
         this.primerNombre = primerNombre;
         this.segundoNombre = segundoNombre;
         this.primerApellido = primerApellido;
         this.segundoApellido = segundoApellido;
         this.ciudad = ciudad;
+        this.telefono = telefono;
     }
 
     @Override
