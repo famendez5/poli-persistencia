@@ -20,7 +20,7 @@ public class Service {
         }
     }
 
-    public static void consignar(Integer numeroCuenta, double monto) {
+    public static Cuenta consignar(Integer numeroCuenta, double monto) {
         try (Connection connection = ConexionDB.getConexion()) {
             Cuenta cuenta = CuentaDAO.read(numeroCuenta, connection);
             cuenta.saldo += monto;
@@ -30,13 +30,15 @@ public class Service {
             MovimientoDAO.create(movimiento, connection);
 
             connection.commit();
+
+            return cuenta;
         } catch (SQLException sqle) {
             sqle.printStackTrace();
             throw new RuntimeException("Ha ocurrido un error inesperado");
         }
     }
 
-    public static void retirar(Integer numeroCuenta, double monto) {
+    public static Cuenta retirar(Integer numeroCuenta, double monto) {
         try (Connection connection = ConexionDB.getConexion()) {
             Cuenta cuenta = CuentaDAO.read(numeroCuenta, connection);
             if (monto > cuenta.saldo) {
@@ -50,6 +52,8 @@ public class Service {
             MovimientoDAO.create(movimiento, connection);
 
             connection.commit();
+
+            return cuenta;
         } catch (SQLException sqle) {
             sqle.printStackTrace();
             throw new RuntimeException("Ha ocurrido un error inesperado");

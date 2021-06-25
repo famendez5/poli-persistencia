@@ -1,12 +1,12 @@
 package co.edu.poli.persistencia.model;
 
 public class Cliente {
-    private final Integer cedula;
-    private final String primerNombre;
-    private final String segundoNombre;
-    private final String primerApellido;
-    private final String segundoApellido;
-    private final Ciudad ciudad;
+    public final Integer cedula;
+    public final String primerNombre;
+    public final String segundoNombre;
+    public final String primerApellido;
+    public final String segundoApellido;
+    public final Ciudad ciudad;
 
     public Cliente(Integer cedula, String primerNombre, String segundoNombre, String primerApellido, String segundoApellido, Ciudad ciudad) {
         this.cedula = cedula;
