@@ -1,11 +1,11 @@
 package co.edu.poli.persistencia.model;
 
 public class Cuenta {
-    public final Integer numero;
-    public final Double ingreso;
-    public final Double egreso;
-    public final Double saldo;
-    public final Cliente cliente;
+    public Integer numero;
+    public Double ingreso;
+    public Double egreso;
+    public Double saldo;
+    public Cliente cliente;
 
     public Cuenta(Integer numero, Double ingreso, Double egreso, Double saldo, Cliente cliente) {
         this.numero = numero;

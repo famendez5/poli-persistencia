@@ -11,6 +11,9 @@ public class TipoMovimiento {
         this.descripcion = descripcion;
     }
 
+    public static final TipoMovimiento CONSIGNACION = new TipoMovimiento(1, "", "");
+    public static final TipoMovimiento RETIRO = new TipoMovimiento(2, "", "");
+
     @Override
     public String toString() {
         return "TipoMovimiento{" +
