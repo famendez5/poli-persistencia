@@ -10,7 +10,7 @@ public class ConexionDB {
     public static Connection getConexion() {
         String url = "jdbc:mysql://localhost:3306/transaccion";
         String Usuario = "root";
-        String Contrasenia = "";
+        String Contrasenia = "9YGgirLtHpy7";
         try {
             conexion = DriverManager.getConnection(url, Usuario, Contrasenia);
             System.out.println("Conexion establecida con la base de datos");

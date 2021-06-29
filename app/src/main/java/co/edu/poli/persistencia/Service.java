@@ -21,7 +21,8 @@ public class Service {
     }
 
     public static Cuenta consignar(Integer numeroCuenta, double monto) {
-        try (Connection connection = ConexionDB.getConexion()) {
+        Connection connection = ConexionDB.getConexion();
+        try {
             Cuenta cuenta = CuentaDAO.read(numeroCuenta, connection);
             cuenta.saldo += monto;
             CuentaDAO.update(cuenta, connection);
@@ -30,16 +31,27 @@ public class Service {
             MovimientoDAO.create(movimiento, connection);
 
             connection.commit();
-
             return cuenta;
         } catch (SQLException sqle) {
             sqle.printStackTrace();
+            try {
+                connection.rollback();
+            } catch (SQLException sqle2) {
+                sqle2.printStackTrace();
+            }
             throw new RuntimeException("Ha ocurrido un error inesperado");
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException sqle) {
+                sqle.printStackTrace();
+            }
         }
     }
 
     public static Cuenta retirar(Integer numeroCuenta, double monto) {
-        try (Connection connection = ConexionDB.getConexion()) {
+        Connection connection = ConexionDB.getConexion();
+        try {
             Cuenta cuenta = CuentaDAO.read(numeroCuenta, connection);
             if (monto > cuenta.saldo) {
                 throw new RuntimeException("Saldo insuficiente");
@@ -56,12 +68,23 @@ public class Service {
             return cuenta;
         } catch (SQLException sqle) {
             sqle.printStackTrace();
-            throw new RuntimeException("Ha ocurrido un error inesperado");
+            try {
+                connection.rollback();
+            } catch (SQLException sqle2) {
+                sqle2.printStackTrace();
+            }
+            throw new RuntimeException("Ha ocurrido un error inesperado"); } finally {
+            try {
+                connection.close();
+            } catch (SQLException sqle) {
+                sqle.printStackTrace();
+            }
         }
     }
 
     public static void transferir(Integer nroCuentaOrigen, Integer nroCuentaDestino, double monto) {
-        try (Connection connection = ConexionDB.getConexion()) {
+        Connection connection = ConexionDB.getConexion();
+        try {
             Cuenta cuentaOrigen = CuentaDAO.read(nroCuentaOrigen, connection);
 
             if (monto > cuentaOrigen.saldo) {
@@ -82,7 +105,18 @@ public class Service {
             connection.commit();
         } catch (SQLException sqle) {
             sqle.printStackTrace();
+            try {
+                connection.rollback();
+            } catch (SQLException sqle2) {
+                sqle2.printStackTrace();
+            }
             throw new RuntimeException("Ha ocurrido un error inesperado");
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException sqle) {
+                sqle.printStackTrace();
+            }
         }
     }
 }
