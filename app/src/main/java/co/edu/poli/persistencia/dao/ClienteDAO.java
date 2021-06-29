@@ -17,8 +17,7 @@ public class ClienteDAO {
         sql += "JOIN Pais p on (p.codpais = c.Pais) ";
         sql += "JOIN Telefono t on (t.Ced = Cedula) ";
         sql += "WHERE Cedula=?";
-        // String sql = "INSERT INTO Cliente (Cedula, Nombre1, Nombre2, Apellido1, Apellido2, Ciudad) VALUES(?, ?, ?, ?, ?, ?)";
-//        String sql = "INSERT INTO Cliente (Cedula, Nombre1, Nombre2, Apellido1, Apellido2, Ciudad) VALUES(80258757, 'Darwison', '', 'Orjuela', 'Vallejo', 12345)";
+
         try (PreparedStatement stmt = connection.prepareCall(sql)) {
             stmt.setInt(1, cedula);
             try (ResultSet resultSet = stmt.executeQuery()) {
