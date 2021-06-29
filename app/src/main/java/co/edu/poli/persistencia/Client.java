@@ -43,7 +43,7 @@ public class Client {
     }
 
     public static String ejecutarOpcion(int opcion) {
-        if (opcion <= 0 || opcion > 3) {
+        if (opcion <= 0 || opcion > 4) {
             return "";
         }
 
@@ -63,11 +63,17 @@ public class Client {
                 }
 
                 return String.format("Cuenta: %d\n Titular: %s\n C.C. %d\n saldo: %s", cuenta.numero, cuenta.cliente.primerNombre, cuenta.cliente.cedula, cuenta.saldo);
+            } else if (opcion == 3) { // Consulta
+                Cuenta cuenta = Service.consultar(nroCuenta);
+                return String.format("Cuenta: %d\n Titular: %s\n C.C. %d\n saldo: %s\n Egresos totales: %s\n Ingresos totales: %s\n Ciudad: %s\n Telefono: %s",
+                        cuenta.numero, cuenta.cliente.primerNombre, cuenta.cliente.cedula, cuenta.saldo, cuenta.egreso, cuenta.ingreso, cuenta.cliente.ciudad.nombre, cuenta.cliente.telefono);
+                // mensajeStatus = "Consulta realizada";
             }
 
-            Cuenta cuenta = Service.consultar(nroCuenta);
-            return String.format("Cuenta: %d\n Titular: %s\n C.C. %d\n saldo: %s\n Egresos totales: %s\n Ingresos totales: %s\n Ciudad: %s\n Telefono: ", cuenta.numero, cuenta.cliente.primerNombre, cuenta.cliente.cedula, cuenta.saldo, cuenta.egreso, cuenta.ingreso, cuenta.cliente.ciudad.nombre);
-            // mensajeStatus = "Consulta realizada";
+            int nroCuentaDestino = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el numero de cuenta destino"));
+            double monto = Integer.parseInt(JOptionPane.showInputDialog("Digite la cantidad que va a transferir"));
+            Service.transferir(nroCuenta, nroCuentaDestino, monto);
+            return String.format("Tranferencia exitosa de la cuenta %d a la cuenta %d por la cantidad de %.2f", nroCuenta, nroCuentaDestino, monto);
         } catch (RuntimeException re) {
             return re.getMessage();
         }

@@ -71,3 +71,5 @@ create table transaccion.Movimiento
     constraint cuentaFK foreign key (Numcuen) references Cuenta (Numcuenta),
     constraint tipoFK foreign key (Tipo) references tipoMovimiento (IDtipo)
 );
+
+ALTER TABLE transaccion.Movimiento MODIFY COLUMN Fechamov TIMESTAMP NOT NULL;

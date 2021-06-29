@@ -17,6 +17,7 @@ public class ConexionDB {
             conexion.setAutoCommit(false);
         } catch (SQLException sql) {
             sql.printStackTrace();
+            throw new RuntimeException("No ha sido posible conectarse con la base de datos");
         }
 
         return conexion;
